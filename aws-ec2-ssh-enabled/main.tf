@@ -42,8 +42,10 @@ resource "aws_security_group" "my_sg" {
 resource aws_instance my_instance {
     instance_type = "t2.micro"
     ami = "ami-0e2c8caa4b6378d8c"
+    # list assignment - security_groups expects a list of values (even if there's only one) - So the square brackets [ ] are used to wrap the interpolated value as a list
     security_groups = [ aws_security_group.my_sg.name ]  # interpolation
-    key_name = aws_security_group.my_sg.key_name.id    # interpolation
+    # simple string or value assignment - key_name expects a single string value, not a list. So you just assign the value directly — no need for square brackets.
+    key_name = aws_security_group.my_sg.key_name.id    # interpolation 
     root_block_device {
       volume_size = 10
       volume_type = "gp3"    # general purpose
